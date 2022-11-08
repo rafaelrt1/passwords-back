@@ -109,6 +109,19 @@ router.delete("/account", async (req, res, next) => {
     }
 });
 
+router.delete("/delete-all-accounts", async (req, res, next) => {
+    try {
+        const conn = await db.connect();
+        const [rows] = await conn.query("DELETE from senhas");
+        const result = await getAccouts();
+        res.json("Sucesso");
+    } catch (e) {
+        res.json({
+            error: "Não foi possível realizar esta operação",
+        });
+    }
+});
+
 router.get("/user", async (req, res, next) => {
     const conn = await db.connect();
     const [user] = await conn.query("SELECT * from usuarios where id = 1");
